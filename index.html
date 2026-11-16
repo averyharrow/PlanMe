@@ -8,126 +8,460 @@
 <title>PlanMe</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  min-height: 100vh;
   font-family: Arial, sans-serif;
   background: #f7f5f0;
   color: #243b55;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
-.container {
-  width: 90%;
-  max-width: 430px;
-  text-align: center;
-  padding: 35px 24px;
+button, input { font: inherit; }
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
 }
 
 .logo {
-  font-family: "Brush Script MT", cursive;
-  font-size: 76px;
-  color: #244b70;
-  text-shadow:
-    2px 3px 0 #d4e5ed,
-    4px 6px 12px #9aafbd;
-  animation: appear 1.5s ease both;
+  font-family: cursive;
+  font-size: 65px;
+  font-style: italic;
+  color: #244c70;
+  text-align: center;
 }
 
 .subtitle {
-  font-size: 15px;
-  letter-spacing: 3px;
-  color: #8295a5;
-  margin-top: 5px;
-  animation: appear 2s ease both;
+  letter-spacing: 5px;
+  color: #8998a8;
+  text-align: center;
+  margin-bottom: 55px;
 }
 
 .card {
-  margin-top: 65px;
-  padding: 35px 24px;
-  border-radius: 32px;
-  background: #f9f8f4;
-  box-shadow:
-    12px 12px 28px #d9d7d1,
-    -12px -12px 28px #ffffff;
-  animation: float 4s ease-in-out infinite;
+  background: #fffefa;
+  border-radius: 35px;
+  padding: 35px 25px;
+  width: 100%;
+  max-width: 430px;
+  text-align: center;
+  box-shadow: 0 15px 45px #243b5515;
 }
 
-.card h2 {
-  font-size: 25px;
-  font-weight: 500;
-}
+h1 { font-size: 28px; }
 
-.card p {
-  color: #8494a1;
+p {
+  color: #8994a2;
   line-height: 1.7;
 }
 
-button {
-  margin-top: 25px;
+input {
   width: 100%;
   padding: 17px;
-  border: none;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #82b8d0, #477d9e);
+  border: 1px solid #dce2e7;
+  border-radius: 15px;
+  margin: 12px 0;
+  outline-color: #6ca9c5;
+}
+
+.primary {
+  width: 100%;
+  padding: 19px;
+  border-radius: 18px;
+  background: linear-gradient(120deg,#85bdd0,#467f9e);
   color: white;
-  font-size: 16px;
-  box-shadow: 5px 6px 12px #b9c7cc;
-  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
 }
 
-button:active {
-  transform: scale(.97);
+.hidden { display: none !important; }
+
+#app {
+  max-width: 600px;
+  margin: auto;
+  padding: 25px 18px;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+.top .logo {
+  font-size: 38px;
+}
+
+.small {
+  background: #e5edf0;
+  color: #345b73;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.calendar {
+  background: #fffefa;
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px #243b5510;
+}
+
+.month {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.month button {
+  background: #eaf1f3;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #345b73;
+}
+
+.week, .days {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 5px;
+  text-align: center;
+}
+
+.week div {
+  font-size: 12px;
+  color: #8994a2;
+  padding: 8px 0;
+}
+
+.day {
+  padding: 12px 0;
+  border-radius: 12px;
+  background: #f6f6f2;
+  color: #34516b;
+  min-width: 0;
+}
+
+.day.selected {
+  background: #83b7ca;
+  color: white;
+}
+
+.day.today {
+  border: 2px solid #83b7ca;
+}
+
+.day.has-event::after {
+  content: "•";
+  display: block;
+  color: #e3a77c;
+  height: 5px;
+}
+
+.section {
+  background: #fffefa;
+  border-radius: 22px;
+  padding: 22px;
+  margin-top: 20px;
+}
+
+.event {
+  background: #eef4f5;
+  border-radius: 14px;
+  padding: 14px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.event button {
+  background: transparent;
+  color: #b36d6d;
+  padding: 8px;
+}
+
+.add {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  background: #e6f0f2;
+  color: #345b73;
+  margin-top: 15px;
+}
+
+#eventForm {
+  margin-top: 15px;
+}
+
+.footer {
+  text-align: center;
+  color: #a0a9b1;
+  font-size: 12px;
+  padding: 25px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
+<!-- POWITANIE -->
+<div id="welcome" class="screen">
   <div class="logo">PlanMe</div>
   <div class="subtitle">PLAN TOGETHER</div>
 
   <div class="card">
-    <h2>Wszystko w jednym planie</h2>
-    <p>
-      Wspólny kalendarz, wspólne wydarzenia
-      i czas zaplanowany razem.
-    </p>
+    <h1>Wszystko w jednym planie</h1>
+    <p>Wspólny kalendarz, wspólne wydarzenia i czas zaplanowany razem.</p>
+    <button class="primary" onclick="showLogin()">Rozpocznij</button>
+  </div>
+</div>
 
-    <button onclick="startApp()">
-      Rozpocznij
-    </button>
+<!-- WPISYWANIE IMIENIA -->
+<div id="login" class="screen hidden">
+  <div class="logo">PlanMe</div>
+  <div class="subtitle">PLAN TOGETHER</div>
+
+  <div class="card">
+    <h1>Miło Cię poznać! 💙</h1>
+    <p>Jak mamy Cię nazywać?</p>
+    <input id="username" placeholder="Twoje imię lub pseudonim" maxlength="30">
+    <button class="primary" onclick="enterApp()">Wejdź do PlanMe</button>
+  </div>
+</div>
+
+<!-- APLIKACJA -->
+<div id="app" class="hidden">
+
+  <div class="top">
+    <div>
+      <div class="logo">PlanMe</div>
+      <p id="hello" style="margin:0"></p>
+    </div>
+    <button class="small" onclick="changeName()">Profil ⚙️</button>
   </div>
 
+  <div class="calendar">
+    <div class="month">
+      <button onclick="moveMonth(-1)">❮</button>
+      <h2 id="monthName"></h2>
+      <button onclick="moveMonth(1)">❯</button>
+    </div>
+
+    <div class="week">
+      <div>Pn</div><div>Wt</div><div>Śr</div>
+      <div>Cz</div><div>Pt</div><div>Sb</div><div>Nd</div>
+    </div>
+
+    <div class="days" id="days"></div>
+  </div>
+
+  <div class="section">
+    <h2 id="selectedTitle">Wydarzenia</h2>
+    <div id="events"></div>
+
+    <button class="add" onclick="toggleForm()">＋ Dodaj wydarzenie</button>
+
+    <div id="eventForm" class="hidden">
+      <input id="eventName" placeholder="Nazwa wydarzenia">
+      <input id="eventTime" type="time">
+      <button class="primary" onclick="saveEvent()">Zapisz wydarzenie</button>
+    </div>
+  </div>
+
+  <div class="footer">PlanMe 💙 Plan together</div>
 </div>
 
 <script>
-function startApp() {
-  alert("Witaj w PlanMe! 💙");
+let user = localStorage.getItem("planme_user") || "";
+
+let current = new Date();
+let selected = new Date();
+
+let events = JSON.parse(
+  localStorage.getItem("planme_events") || "{}"
+);
+
+function showLogin() {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+}
+
+function enterApp() {
+  const name = document.getElementById("username").value.trim();
+
+  if (!name) {
+    alert("Wpisz swoje imię lub pseudonim 💙");
+    return;
+  }
+
+  user = name;
+  localStorage.setItem("planme_user", user);
+  openApp();
+}
+
+function openApp() {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  document.getElementById("hello").textContent =
+    "Cześć, " + user + "! 💙";
+
+  render();
+}
+
+function changeName() {
+  const name = prompt("Jak mamy Cię teraz nazywać?", user);
+
+  if (name && name.trim()) {
+    user = name.trim();
+    localStorage.setItem("planme_user", user);
+    document.getElementById("hello").textContent =
+      "Cześć, " + user + "! 💙";
+  }
+}
+
+function moveMonth(amount) {
+  current.setMonth(current.getMonth() + amount);
+  render();
+}
+
+function key(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth()+1).padStart(2,"0"),
+    String(date.getDate()).padStart(2,"0")
+  ].join("-");
+}
+
+function render() {
+  const year = current.getFullYear();
+  const month = current.getMonth();
+
+  document.getElementById("monthName").textContent =
+    current.toLocaleDateString("pl-PL", {
+      month:"long",
+      year:"numeric"
+    });
+
+  const first = new Date(year,month,1);
+  const offset = (first.getDay()+6)%7;
+  const count = new Date(year,month+1,0).getDate();
+
+  const container = document.getElementById("days");
+  container.innerHTML = "";
+
+  for (let i=0; i<offset; i++) {
+    container.innerHTML += "<div></div>";
+  }
+
+  for (let d=1; d<=count; d++) {
+    const date = new Date(year,month,d);
+    const k = key(date);
+
+    const btn = document.createElement("button");
+    btn.className = "day";
+    btn.textContent = d;
+
+    if (key(selected) === k) btn.classList.add("selected");
+    if (key(new Date()) === k) btn.classList.add("today");
+    if (events[k]?.length) btn.classList.add("has-event");
+
+    btn.onclick = () => {
+      selected = date;
+      render();
+    };
+
+    container.appendChild(btn);
+  }
+
+  showEvents();
+}
+
+function showEvents() {
+  const k = key(selected);
+
+  document.getElementById("selectedTitle").textContent =
+    "Wydarzenia – " + selected.toLocaleDateString("pl-PL");
+
+  const container = document.getElementById("events");
+  container.innerHTML = "";
+
+  const list = events[k] || [];
+
+  if (!list.length) {
+    container.innerHTML =
+      "<p>Na ten dzień nie masz jeszcze planów ✨</p>";
+  }
+
+  list.forEach((event,index) => {
+    const div = document.createElement("div");
+    div.className = "event";
+
+    const info = document.createElement("span");
+    info.textContent = (event.time || "Bez godziny") +
+      " · " + event.name;
+
+    const remove = document.createElement("button");
+    remove.textContent = "Usuń";
+    remove.onclick = () => deleteEvent(index);
+
+    div.append(info,remove);
+    container.appendChild(div);
+  });
+}
+
+function toggleForm() {
+  document.getElementById("eventForm").classList.toggle("hidden");
+}
+
+function saveEvent() {
+  const name = document.getElementById("eventName").value.trim();
+  const time = document.getElementById("eventTime").value;
+
+  if (!name) {
+    alert("Wpisz nazwę wydarzenia!");
+    return;
+  }
+
+  const k = key(selected);
+
+  if (!events[k]) events[k] = [];
+
+  events[k].push({name,time});
+
+  localStorage.setItem("planme_events",JSON.stringify(events));
+
+  document.getElementById("eventName").value = "";
+  document.getElementById("eventTime").value = "";
+  document.getElementById("eventForm").classList.add("hidden");
+
+  render();
+}
+
+function deleteEvent(index) {
+  const k = key(selected);
+  events[k].splice(index,1);
+
+  localStorage.setItem("planme_events",JSON.stringify(events));
+  render();
+}
+
+if (user) {
+  openApp();
 }
 </script>
 
