@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f5f0">
+<title>PlanMe</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f7f5f0;
+  color: #243b55;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 90%;
+  max-width: 430px;
+  text-align: center;
+  padding: 35px 24px;
+}
+
+.logo {
+  font-family: "Brush Script MT", cursive;
+  font-size: 76px;
+  color: #244b70;
+  text-shadow:
+    2px 3px 0 #d4e5ed,
+    4px 6px 12px #9aafbd;
+  animation: appear 1.5s ease both;
+}
+
+.subtitle {
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: #8295a5;
+  margin-top: 5px;
+  animation: appear 2s ease both;
+}
+
+.card {
+  margin-top: 65px;
+  padding: 35px 24px;
+  border-radius: 32px;
+  background: #f9f8f4;
+  box-shadow:
+    12px 12px 28px #d9d7d1,
+    -12px -12px 28px #ffffff;
+  animation: float 4s ease-in-out infinite;
+}
+
+.card h2 {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.card p {
+  color: #8494a1;
+  line-height: 1.7;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #82b8d0, #477d9e);
+  color: white;
+  font-size: 16px;
+  box-shadow: 5px 6px 12px #b9c7cc;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="logo">PlanMe</div>
+  <div class="subtitle">PLAN TOGETHER</div>
+
+  <div class="card">
+    <h2>Wszystko w jednym planie</h2>
+    <p>
+      Wspólny kalendarz, wspólne wydarzenia
+      i czas zaplanowany razem.
+    </p>
+
+    <button onclick="startApp()">
+      Rozpocznij
+    </button>
+  </div>
+
+</div>
+
+<script>
+function startApp() {
+  alert("Witaj w PlanMe! 💙");
+}
+</script>
+
+</body>
+</html>
